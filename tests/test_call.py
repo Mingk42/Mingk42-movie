@@ -21,16 +21,15 @@ def test_req():
 
 
 def test_resp():
-    data,date=req2list()
+    data=req2list()
     assert isinstance(data,list)
 
 def test_df():
-    df,dt=list2df()
+    df=list2df()
     assert "rnum" in df.columns
     assert "openDt" in df.columns
     assert "movieNm" in df.columns
     assert "audiAcc" in df.columns
-    assert dt=="20120101"
 
 def test_save():
     df=save2df()

@@ -27,24 +27,22 @@ def get_key():
     return key
 
   
-def req2list() -> list:
-    _,data=req()
+def req2list(dt="20120101") -> list:
+    _,data=req(dt)
     _list = data["boxOfficeResult"]["dailyBoxOfficeList"]
-    dt=data["boxOfficeResult"]["showRange"]
-    dt=dt.split("~")[0]
     
-    return _list,dt
+    return _list
 
 
-def list2df():
-    l,dt=req2list()
+def list2df(dt="20120101"):
+    l=req2list(dt)
     df=pd.DataFrame(l)
 
-    return df,dt
+    return df
 
 
-def save2df():
-    df,dt = list2df()
+def save2df(dt="20120101"):
+    df = list2df(dt)
     # df에 load_dt 컬럼 추가 (yyyymmdd형식으로)
     df['load_dt']=dt
     # 아래 파일 저장시 load_dt기준으로 파티셔닝
