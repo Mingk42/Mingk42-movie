@@ -26,13 +26,13 @@ def test_resp():
 
 def test_df():
     df,dt=list2df()
-    print(df)
-    print(dt.split("~")[0])
     assert "rnum" in df.columns
     assert "openDt" in df.columns
     assert "movieNm" in df.columns
     assert "audiAcc" in df.columns
+    assert dt=="20120101"
 
 def test_save():
     df=save2df()
     assert isinstance(df,pd.DataFrame)
+    assert "load_dt" in df.columns

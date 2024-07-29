@@ -34,22 +34,23 @@ def req2df():
 def req2list() -> list:
     _,data=req()
     _list = data["boxOfficeResult"]["dailyBoxOfficeList"]
-    d=data["boxOfficeResult"]["showRange"]
+    dt=data["boxOfficeResult"]["showRange"]
+    dt=dt.split("~")[0]
     
-    return _list,d
+    return _list,dt
 
 
 def list2df():
-    l,d=req2list()
+    l,dt=req2list()
     df=pd.DataFrame(l)
 
-    return df,d
+    return df,dt
 
 
 def save2df():
-    df,d = list2df()
+    df,dt = list2df()
     # df에 load_dt 컬럼 추가 (yyyymmdd형식으로)
-    df['load_dt']=d.split("~")[0]
+    df['load_dt']=dt
     # 아래 파일 저장시 load_dt기준으로 파티셔닝
     df.to_parquet("~/tmp/test_parquet/",partition_cols=['load_dt'])
 
