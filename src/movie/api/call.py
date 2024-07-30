@@ -50,6 +50,21 @@ def save2df(dt="20120101"):
 
     return df
 
+def apply_type2df(load_dt="20120101", path="~/tmp/test_parquet"):
+    df = pd.read_parquet(f"{path}/load_dt={load_dt}")
+    """
+    df["rnum"]=df["rnum"].apply(pd.to_numeric)
+    df["rank"]=df["rank"].apply(pd.to_numeric)
+    df["rankInten"]=df["rankInten"].apply(pd.to_numeric)
+    df["salesAmt"]=df["salesAmt"].apply(pd.to_numeric)
+    df["salesShare"]=df["salesShare"].apply(pd.to_numeric)
+    df["salesInten"]=df["salesInten"].apply(pd.to_numeric)
+    df["salesChange"]=df["salesChange"].apply(pd.to_numeric)
+    """
+    for c in ["rnum", "rank", "rankInten", "salesAmt", "salesShare", "salesInten", "salesChange", "salesAcc", "audiCnt", "audiInten", "audiChange", "audiAcc", "scrnCnt", "showCnt"]:
+        df[c] = df[c].apply(pd.to_numeric)
+
+    return df
 
 def echo(yaho):
     return yaho
