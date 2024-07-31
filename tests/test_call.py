@@ -10,6 +10,10 @@ def test_gen_url():
     assert True
     assert "http" in url
 
+    d = {"multiMovieYn":"N"}
+    url = gen_url(req_val=d)
+
+
 
 
 def test_req():
@@ -35,6 +39,7 @@ def test_save():
     df=save2df()
     assert isinstance(df,pd.DataFrame)
     assert "load_dt" in df.columns
+    assert len(df) == 10
 
 
 def test_apply_type2df():
@@ -43,10 +48,10 @@ def test_apply_type2df():
     df2=apply_type2df(20240724)
     assert isinstance(df2,pd.DataFrame)
     print()
-    print(df2)
+    print(df)
     for c in ["rnum", "rank", "rankInten", "salesAmt", "salesShare", "salesInten", "salesChange", "salesAcc", "audiCnt", "audiInten", "audiChange", "audiAcc", "scrnCnt", "showCnt"]:
         assert df2[c].dtype in ["int64", "float64"]
-    print(df2.dtypes)
+    print(df.dtypes)
 
 def test_echo():
     msg="test"

@@ -2,10 +2,12 @@ import requests as reqs
 import os
 import pandas as pd
 
-def gen_url(dt="20120101"):
+def gen_url(dt="20120101", req_val={"multiMovieYn":"N"}):
     base_url="http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json"
     key=get_key()
     url=f"{base_url}?key={key}&targetDt={dt}"
+    for key, value in req_val.items():
+        url += f"&{key}={value}"
 
     return url
 
@@ -41,7 +43,7 @@ def list2df(dt="20120101"):
     return df
 
 
-def save2df(dt="20120101"):
+def save2df(dt="20120101", url_param={}):
     df = list2df(dt)
     # df에 load_dt 컬럼 추가 (yyyymmdd형식으로)
     df['load_dt']=dt
