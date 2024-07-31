@@ -8,12 +8,12 @@ def gen_url(dt="20120101", req_val={"multiMovieYn":"N"}):
     url=f"{base_url}?key={key}&targetDt={dt}"
     for key, value in req_val.items():
         url += f"&{key}={value}"
-
+    print(url)
     return url
 
 
-def req(dt="20120101"):
-    url=gen_url(dt)
+def req(dt="20120101", url_param={}):
+    url=gen_url(dt,req_val=url_param)
     resp=reqs.get(url)
 
     code=resp.status_code
@@ -29,22 +29,22 @@ def get_key():
     return key
 
   
-def req2list(dt="20120101") -> list:
-    _,data=req(dt)
+def req2list(dt="20120101", url_param={}) -> list:
+    _,data=req(dt,url_param=url_param)
     _list = data["boxOfficeResult"]["dailyBoxOfficeList"]
     
     return _list
 
 
-def list2df(dt="20120101"):
-    l=req2list(dt)
+def list2df(dt="20120101", url_param={}):
+    l=req2list(dt,url_param=url_param)
     df=pd.DataFrame(l)
 
     return df
 
 
 def save2df(dt="20120101", url_param={}):
-    df = list2df(dt)
+    df = list2df(dt,url_param=url_param)
     # df에 load_dt 컬럼 추가 (yyyymmdd형식으로)
     df['load_dt']=dt
     # 아래 파일 저장시 load_dt기준으로 파티셔닝
